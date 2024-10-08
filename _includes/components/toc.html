@@ -1,0 +1,10 @@
+{%- comment -%}
+  Include as: {% include components/toc.html %}
+{%- endcomment -%}
+
+<nav class="toc" aria-label="Table of Contents">
+    {% if site.back_to_top %}
+        <a href="#top" class="back-to-top">{{ site.back_to_top_text }}</a>
+    {% endif %}
+    {% include toc.html html=content %}
+</nav>

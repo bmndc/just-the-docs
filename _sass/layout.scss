@@ -16,11 +16,11 @@
   }
 
   @include mq(lg) {
-    width: calc((100% - #{$nav-width + $content-width}) / 2 + #{$nav-width});
+    width: calc((100% - #{$nav-width + $toc-width + $content-width}) / 2 + #{$nav-width});
     min-width: $nav-width;
   }
 
-  & + .main {
+  & ~ .main {
     @include mq(md) {
       margin-left: $nav-width-md;
     }
@@ -30,7 +30,7 @@
       // disable for Max(), we want to use the CSS max() function
       margin-left: Max(
         #{$nav-width},
-        calc((100% - #{$nav-width + $content-width}) / 2 + #{$nav-width})
+        calc((100% - #{$nav-width + $toc-width + $content-width}) / 2 + #{$nav-width})
       );
       // stylelint-enable function-name-case
     }
@@ -222,4 +222,44 @@ body {
   width: $sp-5;
   height: $sp-5;
   color: $link-color;
+}
+
+nav.toc {
+  position: sticky;
+  top: 1rem;
+  left: calc((100% - #{$nav-width + $toc-width + $content-width}) / 2 + #{$nav-width + $content-width} + 1rem);
+  float: left;
+  margin-top: #{$header-height + $sp-8};
+  max-width: $toc-width;
+  max-height: calc(100vh - 1rem);
+  overflow-y: auto;
+
+  @include fs-3;
+}
+// Because toc-width is usually small => hide the list bullet points and minimize left padding
+// TODO: utilize jekyll-toc's item_class and submenu_class
+nav.toc ul {
+  list-style-type: none;
+  padding-left: $sp-3;
+}
+nav.toc > ul {
+  padding-left: 0;
+}
+nav.toc li {
+  padding-top: $sp-1;
+}
+nav.toc > ul::before {
+  content: "Table of Contents";
+  display: block;
+  margin: $sp-2 0;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+
+  @include fs-2;
+}
+@media (max-width: calc(#{$nav-width + $toc-width + $content-width})) {
+  nav.toc {
+      display: none;
+      visibility: hidden;
+  }
 }
