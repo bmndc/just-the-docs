@@ -96,6 +96,8 @@ enable_copy_code_button: true
 # Supports true (default) or false
 toc_enabled: true
 toc:
+  # Title of the Table of Contents
+  toc_text: "Table of Contents"
   # Minimum header level to include in ToC
   # Default: 1
   min_level: 1

@@ -30,7 +30,7 @@
       // disable for Max(), we want to use the CSS max() function
       margin-left: Max(
         #{$nav-width},
-        calc((100% - #{$nav-width + $toc-width + $content-width}) / 2 + #{$nav-width})
+        calc((100% - #{$nav-width + $toc-width + $content-width}) / 2 + #{$nav-width - $toc-width})
       );
       // stylelint-enable function-name-case
     }
@@ -57,6 +57,8 @@
 
 .main {
   margin: auto;
+  display: inline-block;
+  max-width: 100%;
 
   @include mq(md) {
     position: relative;
@@ -224,13 +226,19 @@ body {
   color: $link-color;
 }
 
+/* float: left works fine on Chromium-based browsers, but there's a bug from Firefox 59 where opening and
+closing DevTools will cause the main content to be pushed down as if ToC is a block (abandoned to this day!).
+ref: Bug 1448995
+As a temporary fix, set both the main content and ToC to be inline with each other, adjust .main's
+margin-left to accompany the ToC that goes before it */
 nav.toc {
   position: sticky;
   top: 1rem;
   left: calc((100% - #{$nav-width + $toc-width + $content-width}) / 2 + #{$nav-width + $content-width} + 1rem);
-  float: left;
+  display: inline-block;
+  vertical-align: top;
   margin-top: #{$header-height + $sp-8};
-  max-width: $toc-width;
+  width: $toc-width;
   max-height: calc(100vh - 1rem);
   overflow-y: auto;
 
@@ -266,14 +274,4 @@ nav.toc > ul {
 
 nav.toc li {
   padding-top: $sp-1;
-}
-
-nav.toc > ul::before {
-  content: "Table of Contents";
-  display: block;
-  margin: $sp-2 0;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-
-  @include fs-2;
 }
