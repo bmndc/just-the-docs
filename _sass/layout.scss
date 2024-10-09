@@ -236,10 +236,12 @@ nav.toc {
 
   @include fs-3;
 }
+
 .main-content details {
   display: none;
   visibility: hidden;
 }
+
 @media (max-width: calc(#{$nav-width + $toc-width + $content-width})) {
   nav.toc {
     display: none;
@@ -250,18 +252,22 @@ nav.toc {
     visibility: visible;
   }
 }
+
 // Because toc-width is usually small => hide the list bullet points and minimize left padding
 // TODO: utilize jekyll-toc's item_class and submenu_class
 nav.toc ul {
   list-style-type: none;
   padding-left: $sp-3;
 }
+
 nav.toc > ul {
   padding-left: 0;
 }
+
 nav.toc li {
   padding-top: $sp-1;
 }
+
 nav.toc > ul::before {
   content: "Table of Contents";
   display: block;
