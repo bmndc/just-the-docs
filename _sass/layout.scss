@@ -26,13 +26,13 @@
 
   & ~ .main {
     @include mq(md) {
-      margin-left: $nav-width-md;
+      left: $nav-width-md;
     }
 
     @include mq(lg) {
       // stylelint-disable function-name-case
       // disable for Max(), we want to use the CSS max() function
-      margin-left: Max(
+      left: Max(
         #{$nav-width},
         calc((100% - #{$nav-width + $content-width}) / 2 + #{$nav-width})
       );
@@ -40,7 +40,7 @@
     }
 
     @include mq(xl) {
-      margin-left: calc(-#{$toc-width} + (100% - #{$nav-width + $toc-width + $content-width}) / 2 + #{$nav-width});
+      left: calc(-#{$toc-width} + (100% - #{$nav-width + $toc-width + $content-width}) / 2 + #{$nav-width});
     }
 
     .main-header {
