@@ -16,8 +16,12 @@
   }
 
   @include mq(lg) {
-    width: calc((100% - #{$nav-width + $toc-width + $content-width}) / 2 + #{$nav-width});
+    width: calc((100% - #{$nav-width + $content-width}) / 2 + #{$nav-width});
     min-width: $nav-width;
+  }
+
+  @include mq(xl) {
+    width: calc((100% - #{$nav-width + $toc-width + $content-width}) / 2 + #{$nav-width});
   }
 
   & ~ .main {
@@ -30,9 +34,13 @@
       // disable for Max(), we want to use the CSS max() function
       margin-left: Max(
         #{$nav-width},
-        calc((100% - #{$nav-width + $toc-width + $content-width}) / 2 + #{$nav-width - $toc-width})
+        calc((100% - #{$nav-width + $content-width}) / 2 + #{$nav-width})
       );
       // stylelint-enable function-name-case
+    }
+
+    @include mq(xl) {
+      margin-left: calc(-#{$toc-width} + (100% - #{$nav-width + $toc-width + $content-width}) / 2 + #{$nav-width});
     }
 
     .main-header {
@@ -232,32 +240,32 @@ ref: Bug 1448995
 As a temporary fix, set both the main content and ToC to be inline with each other, adjust .main's
 margin-left to accompany the ToC that goes before it */
 nav.toc {
-  position: sticky;
-  top: 1rem;
-  left: calc((100% - #{$nav-width + $toc-width + $content-width}) / 2 + #{$nav-width + $content-width} + 1rem);
-  display: inline-block;
-  vertical-align: top;
-  margin-top: #{$header-height + $sp-8};
-  width: $toc-width;
-  max-height: calc(100vh - 1rem);
-  overflow-y: auto;
+  display: none;
+  visibility: hidden;
+
+  @include mq(xl) {
+    display: inline-block;
+    visibility: visible;
+    position: sticky;
+    top: 1rem;
+    left: calc((100% - #{$nav-width + $toc-width + $content-width}) / 2 + #{$nav-width + $content-width} + 1rem);
+    vertical-align: top;
+    margin-top: #{$header-height + $sp-8};
+    width: $toc-width;
+    max-height: calc(100vh - 1rem);
+    overflow-y: auto;
+  }
 
   @include fs-3;
 }
 
 .main-content details {
-  display: none;
-  visibility: hidden;
-}
+  display: block;
+  visibility: visible;
 
-@media (max-width: calc(#{$nav-width + $toc-width + $content-width})) {
-  nav.toc {
+  @include mq(xl) {
     display: none;
     visibility: hidden;
-  }
-  .main-content details {
-    display: block;
-    visibility: visible;
   }
 }
 
