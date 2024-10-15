@@ -41,6 +41,10 @@
 
     @include mq(xl) {
       left: calc(-#{$toc-width} + (100% - #{$nav-width + $toc-width + $content-width}) / 2 + #{$nav-width});
+
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        left: calc((100% - #{$nav-width + $toc-width + $content-width}) / 2 + #{$nav-width});
+      }
     }
 
     .main-header {
@@ -256,10 +260,15 @@ nav.toc {
     overflow-y: auto;
   }
 
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    position: fixed;
+    max-height: calc(100vh - #{$header-height + $sp-10});
+  }
+
   @include fs-3;
 }
 
-.main-content details {
+details.inpage-toc {
   display: block;
   visibility: visible;
 
@@ -267,6 +276,10 @@ nav.toc {
     display: none;
     visibility: hidden;
   }
+}
+
+nav.toc > h2 {
+  margin-top: $sp-4;
 }
 
 // Because toc-width is usually small => hide the list bullet points and minimize left padding
