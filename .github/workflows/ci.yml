@@ -75,14 +75,14 @@ jobs:
           cache-version: 0 # Increment this number if you need to re-download cached gems
       - name: Cache HTMLProofer
         id: cache-htmlproofer
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: tmp/.htmlproofer
           key: ${{ runner.os }}-htmlproofer
       - name: Build Site
         run: bundle exec jekyll build
       - name: Test with Nu Validator
-        uses: Cyb3r-Jak3/html5validator-action@2a593a9f2c10593cbac84791a6fc4c47e9a106c8
+        uses: Cyb3r-Jak3/html5validator-action@8c6ac0aa42df299c0322ce9980fed61c10930a66
         with:
           config: fixtures/html5validator-config.yml
       - name: Test with html-proofer
@@ -101,7 +101,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
